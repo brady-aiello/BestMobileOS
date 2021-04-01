@@ -12,11 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-
+      
       - name: Create Swift Package
         run: ./gradlew createSwiftPackage
