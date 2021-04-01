@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.*
+
 plugins {
     kotlin("multiplatform") version "1.4.30"
     id("com.android.library")
@@ -19,7 +22,7 @@ kotlin {
     iosX64("ios") {
         binaries {
             framework {
-                baseName = "BestMobileOS"
+                baseName = "bestmobileos"
             }
         }
     }
@@ -47,6 +50,31 @@ kotlin {
     }
 }
 
+val githubProperties = Properties()
+githubProperties.load(FileInputStream(rootProject.file("github.properties")))
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/brady-aiello/bestmobileos")
+            credentials {
+                username = githubProperties["gpr.user"] as String? ?: System.getenv("GPR_USER")
+                password = githubProperties["gpr.key"] as String? ?: System.getenv("GPR_API_KEY")                }
+        }
+    }
+    publications {
+        create<MavenPublication>("gpr") {
+            run {
+                groupId = "me.bradyaiello.library"
+                artifactId = "bestmobileos"
+                version = "1.0.2"
+                artifact("$buildDir/outputs/aar/BestMobileOS-release.aar")
+            }
+        }
+    }
+}
+
 android {
     compileSdkVersion(30)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -64,3 +92,4 @@ multiplatformSwiftPackage {
     }
     outputDirectory(File(projectDir, "../BestMobileOSPackage"))
 }
+

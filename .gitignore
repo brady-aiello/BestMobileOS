@@ -2,6 +2,7 @@
 .idea
 build/
 local.properties
+github.properties
 swiftpackage
 
 # Compiled class file

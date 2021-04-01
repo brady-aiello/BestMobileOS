@@ -13,5 +13,5 @@ pluginManagement {
         }
     }
 }
-rootProject.name = "BestMobileOS"
+rootProject.name = "bestmobileos"
 
