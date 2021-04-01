@@ -12,11 +12,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-
       - name: Build
         run: ./gradlew build -x publish
