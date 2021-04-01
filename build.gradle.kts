@@ -1,4 +1,5 @@
 import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.util.*
 
 plugins {
@@ -51,7 +52,16 @@ kotlin {
 }
 
 val githubProperties = Properties()
-githubProperties.load(FileInputStream(rootProject.file("github.properties")))
+var githubPropertiesFile: FileInputStream? = null
+try {
+    githubPropertiesFile = FileInputStream(rootProject.file("github.properties"))
+} catch(e: FileNotFoundException) {
+    println("No github.properties file found.")
+}
+
+if (githubPropertiesFile != null)  {
+    githubProperties.load(githubPropertiesFile)
+}
 
 publishing {
     repositories {
